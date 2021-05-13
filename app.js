@@ -6,7 +6,13 @@ var express = require("express");
 var app = express();
 
 // APP CONFIG
-mongoose.connect("mongodb://localhost/restful_crud_appo", { useNewUrlParser: true, useUnifiedTopology: true });
+
+var url = process.env.key || "mongodb://localhost:27017/restful_crud_appo"
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+console.log(process.env.key);
+
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,14 +20,7 @@ app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 
-// // MONGOOSE MODEL CONFIG
-// var blogSchema = new mongoose.Schema({
-//     title: String,
-//     image: String,
-//     body: String,
-//     created: { type: Date, default: Date.now }
-// });
-// var Blog = mongoose.model("Blog", blogSchema);
+
 
 var crudSchema = new mongoose.Schema({
     message: String,
